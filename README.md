@@ -29,3 +29,8 @@ python server:
 ```shell
 python3 -m http.server 6969
 ```
+
+steps
+- deploy contract
+- update .env file with new contract
+- re-run webpack 

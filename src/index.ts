@@ -1,4 +1,5 @@
 import { ethers } from "ethers";
+import Counter from "../artifacts/contracts/Contract.sol/Counter.json";
 
 function getEth() {
     // @ts-ignore
@@ -28,19 +29,41 @@ async function run() {
         throw new Error("Please let me take your money");
     }
 
-    const hello = new ethers.Contract(
+    const counter = new ethers.Contract(
         // where the contract is
-        "0x5fbdb2315678afecb367f032d93f642f64180aa3",
+        // "0x5fbdb2315678afecb367f032d93f642f64180aa3",
+        process.env.CONTRACT_ADDRESS,  
         // what the contract has
-        [
-            "function hello() public pure returns (string memory)"
-        ],
+        // [
+        //     "function count() public",
+        //     "function getCounter() public view returns (uint32)",
+        // ],
+        Counter.abi,
         // how to comunicate with the contract
-        new ethers.providers.Web3Provider(getEth())
+        new ethers.providers.Web3Provider(getEth()).getSigner()
     );
 
-    document.getElementById("msg").innerText = "Hollaaaa";
-    document.getElementById("msg").innerText = await hello.hello();
+    document.getElementById("msg").innerText = "Counter: ";
+    // document.getElementById("msg").innerText = await counter.hello();
+
+    const el = document.createElement("div");
+    async function setCounter(count?) {
+        el.innerHTML = count || await counter.getCounter();
+    }
+    // setCounter();
+    counter.on(counter.filters.CounterInc(), function(count) {
+        setCounter(count);
+    })
+
+    const button = document.createElement("button");
+    button.innerText = "increment";
+    button.onclick = async function () {
+        await counter.count();
+        setCounter();
+    }
+
+    document.body.appendChild(el);
+    document.body.appendChild(button);
 }
 
 run();
