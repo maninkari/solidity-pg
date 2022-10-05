@@ -34,3 +34,4 @@ steps
 - deploy contract
 - update .env file with new contract
 - re-run webpack 
+- if complains about nonce go to account/settings/advanced and reset account (localhost) 

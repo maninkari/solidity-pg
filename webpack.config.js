@@ -40,6 +40,12 @@ module.exports = {
       "process.env.CONTRACT_ADDRESS": JSON.stringify(
         process.env.CONTRACT_ADDRESS
       ),
+      //   "process.env.ALCHEMY_API_KEY": JSON.stringify(
+      //     process.env.ALCHEMY_API_KEY
+      //   ),
+      //   "process.env.GOERLI_PRIVATE_KEY": JSON.stringify(
+      //     process.env.GOERLI_PRIVATE_KEY
+      //   ),
       "process.env.DEBUG": JSON.stringify(process.env.DEBUG),
     }),
   ],
